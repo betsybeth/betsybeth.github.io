@@ -53,6 +53,9 @@ body{
 	margin:5px;
 	height:0.3%;
 }
+.btn-link{
+	color:white;
+}
 /** form styling**/
 .form{
 	width:50%;
@@ -99,12 +102,15 @@ font-size: 50px;
 .select-btn {
 	position: absolute;
 	right:0;
-	margin-right:2.5%;	
+	margin-right:2.5%;
 }
 .main-card{
 	display:inline-flex;
 	width:100%;
 	margin-top: 1.5%;
+}
+.header-link{
+	color: black;
 }
 .card-title{
 		font-family: 'Playball', cursive;
