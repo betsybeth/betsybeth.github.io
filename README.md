@@ -20,4 +20,7 @@ with Bright Event you can:
 * delete an RSVP card
 * logout
 ### Credits
-`https://github.com/betsybeth`
+* [Beth][1]
+
+
+[1]: https://github.com/betsybeth
