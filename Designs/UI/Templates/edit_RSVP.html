@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="../Static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../Static/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Alex+Brush|Amiri|Bangers" rel="stylesheet">
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-sm navbar-dark">
+      <a class="navbar-brand" href="#">Bright Event App</a>
+      <ul class="nav-link">
+        <li class="nav-item">
+          <a href="rsvps.html">RSVPS</a>
+        </li>
+      </ul>
+    </nav>
+    <form  class="form" method="post" action="/create_event">
+      <div class ="form-group">
+        <h2>RSVP</h2>
+        <label>Name</label><br>
+        <input class="form-control" type="text" name="name" placeholder="username" autofocus="True">
+        <label>Phone Number</label><br>
+        <input class="form-control" type="number" name="number" placeholder="number">
+        <label>Email</label><br>
+        <input class="form-control" type="Email" name="Email" placeholder="number">
+        <label>Categories</label>
+        <select class="form-control" value="category">
+            <option value="">Select category</option>
+            <option value="Guest">Guest</option>
+            <option value="Media">Media</option>
+            <option value="Speaker">Speaker</option>
+            <option value="Other">Other</option>
+        </select><br>
+        <button  class="btn btn-primary" type="submit" name="button"><a class="btn-link" href="rsvps.html">Edit Rsvp</a></button>
+    </body>
+  </html>
