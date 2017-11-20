@@ -1,0 +1,128 @@
+/** body layout **/
+body{
+	width: auto;
+	margin: 0 3% 0 3%;
+	padding: 0 !important;
+	position: relative;
+	background: #43C6AC;
+	background: -webkit-linear-gradient(to right, #F8FFAE, #43C6AC);
+	background: linear-gradient(to right, #F8FFAE, #43C6AC)
+}
+/** home page styling**/
+.main-container{
+	width: 98%;
+	margin:2%;
+	padding: 0;
+	height: 85vh;
+	position: absolute;
+}
+/**navigation styling**/
+.navbar{
+	padding-top: 1%;
+	background-color: #143B33;
+	box-shadow: 0px 10px 3px #1B2F1C;
+}
+.navbar-brand{
+	font-family: 'Amiri', serif;
+	font-family: 'Bangers', cursive;
+	font-family: 'Alex Brush', cursive;
+	font-size: 40px;
+}
+.navbar-form {
+	width: 49%;
+	display: inline-flex;
+	right: 0;
+	position: absolute;
+}
+.nav-item{
+	list-style-type:none;
+	display:inline-block;
+}
+.nav-item a{
+	padding:8px;
+}
+.nav-link{
+	position: absolute;
+	right:3%;
+}
+.login-input{
+	margin:5px;
+	height:0.5%;
+}
+.login-btn{
+	margin:5px;
+	height:0.3%;
+}
+.btn-link{
+	color:white;
+}
+/** form styling**/
+.form{
+	width:50%;
+	float: right;
+}
+.form-group{
+	color: black;
+	padding: 1% 15% 1% 15%;
+	opacity: 1.5;
+	font-size: 12px;
+	border-radius: 25px;
+}
+.text-header{
+	font-family: 'Amiri', serif;
+font-family: 'Bangers', cursive;
+font-family: 'Alex Brush', cursive;
+font-size: 50px;
+}
+.text-container{
+	font-family: 'Amiri', serif;
+	font-family: 'Bangers', cursive;
+	width:50%;
+	padding: 3% 10% 0 10%;
+}
+
+/** footer styling**/
+.footer{
+	color:#143B33;
+	opacity:0.5;
+	padding: 3% 0 3% 0  ;
+	bottom: 10px;
+	left: 50px;
+	width:30%;
+	margin-top: 50%;
+	float:right;
+}
+
+/*card styling*/
+
+.card-container{
+	margin-top: 1%;
+	margin: 2.5%;
+}
+.select-btn {
+	position: absolute;
+	right:0;
+	margin-right:2.5%;
+}
+.main-card{
+	display:inline-flex;
+	width:100%;
+	margin-top: 1.5%;
+}
+.header-link{
+	color: black;
+}
+.card-title{
+		font-family: 'Playball', cursive;
+}
+.card-div{
+	width:32%;
+	margin:0.8%;
+	height:35vh;
+	border-radius:25px;
+	padding:0.8%;
+	text-align: center;
+	box-shadow:0px 10px 2px #1B2F1C;
+	font-size:15px;
+
+}

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="../Static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../Static/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Alex+Brush|Amiri|Bangers" rel="stylesheet">
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-sm navbar-dark">
+      <a class="navbar-brand" href="#">Bright Event App</a>
+      <ul class="nav-link">
+        <li class="nav-item">
+          <a href="dashboard.html">Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a href="home.html">Logout</a>
+        </li>
+      </ul>
+    </nav>
+    <form  class="form" method="post" action="/create_event">
+      <div class ="form-group">
+        <h2>Event</h2>
+        <label>Event Name</label><br>
+        <input class="form-control" type="text" name="name" placeholder="username" autofocus="True">
+        <label>Decription</label><br>
+        <textarea class="form-control" name="name" rows="3" cols="50"></textarea>
+        <label>Categories</label><br>
+        <select  class="form-control" name="category">
+          <option value="">select category</option>
+          <option value="Business">Business</option>
+          <option value="Education">Education</option>
+          <option value="Technology">Technology</option>
+          <option value="Social">Social</option>
+          <option value="Music">Music</option>
+
+        </select>
+        <label>Venue</label><br>
+        <input class="form-control" type="text" name= "venue" placeholder="venue">
+        <label>Date of Event</label><br>
+        <input class="form-control" type="datetime-local" name="date">
+        <label>Author</label><br>
+        <input class="form-control" type="text" name="Author" placeholder="Author"><br>
+        <button type="submit" class="btn btn-primary"><a class="btn-link" href="dashboard.html">Create event</a></button>
+      </div>
+   </form>
+
+  </body>
+</html>
