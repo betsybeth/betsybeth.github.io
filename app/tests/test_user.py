@@ -1,10 +1,11 @@
 """ modules and libraries """
 
 import unittest
-from main.person import Person
-from main.event import Event
-from main.user import User
 from uuid import uuid4
+from ..main.person import Person
+from ..main.event import Event
+from ..main.user import User
+
 
 class TestUser(unittest.TestCase):
     """ User Test class """

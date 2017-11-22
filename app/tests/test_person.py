@@ -1,6 +1,6 @@
 """ modules and libraries used for Test Person class"""
 import unittest
-from main.person import Person
+from ..main.person import Person
 
 
 class TestPerson(unittest.TestCase):

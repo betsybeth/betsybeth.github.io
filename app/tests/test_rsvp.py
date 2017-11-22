@@ -1,7 +1,7 @@
 """ modules and libraries used for TestRsvp class"""
 import unittest
-from main.rsvp import Rsvp
-from main.person import Person
+from ..main.rsvp import Rsvp
+from ..main.person import Person
 
 
 class TestRsvp(unittest.TestCase):

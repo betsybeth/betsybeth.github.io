@@ -1,8 +1,8 @@
 """ modules and libraries used for Test Event class """
 
 import unittest
-from main.event import Event
-from main.rsvp import Rsvp
+from ..main.event import Event
+from ..main.rsvp import Rsvp
 
 
 class TestEvent(unittest.TestCase):
