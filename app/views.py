@@ -64,8 +64,8 @@ def login():
 
 
 @app.route("/api/v1/create_event", methods=['POST'])
-"""Takes a request and return a json reponse"""
 def create_event():
+    """ Takes a request and return a json response """
     json_dict = request.get_json()
     name = json_dict["name"]
     description = json_dict["description"]
