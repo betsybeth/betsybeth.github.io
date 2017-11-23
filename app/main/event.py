@@ -1,6 +1,5 @@
 from .rsvp import Rsvp
 from uuid import uuid4
-import datetime
 
 
 class Event:
@@ -10,6 +9,7 @@ class Event:
         self.name = name
         self.description = description
         self.category = category
+        self.date = date
         self.id = uuid4().hex
         self.author = author
         self.location = location
