@@ -6,6 +6,7 @@ class User(Person):
 
     def __init__(self, password, name, email, rsvp_category):
         super().__init__(name, email, rsvp_category)
+        self.rsvp_category = "organizer"
         self.password = password
         self.events = dict()
 
