@@ -19,8 +19,20 @@ with Bright Event you can:
 * update RSVP card
 * delete an RSVP card
 * logout
+#### Setting
+* First install the virtual environment globally `sudo pip instal virtualenv`
+* create the virtual enviroment `virtualenv --python=python3 myenv`
+* activate virtual environment `source myenv/bin/activate`
+
+
+#### Testing:
+* Install nosetests `pip install nose`
+* Run the tests `nosetests -v`
+#### Working in progress:
+* Flask API endpoints
+
+
 ### Credits
 * [Beth][1]
-
 
 [1]: https://github.com/betsybeth
