@@ -10,6 +10,7 @@ users= []
 
 @app.route('/api/v1/auth/register', methods=['POST', 'GET'])
 def register():
+    """ Takes request and return a necessary response"""
     json_dict = request.get_json()
     name = json_dict["name"]
     email = json_dict["email"]
@@ -40,6 +41,7 @@ def register():
 
 @app.route('/api/v1/auth/login', methods=['POST'])
 def login():
+    """Takes a request and returns a json response"""
     json_dict = request.get_json()
     email = json_dict["email"]
     password = json_dict["password"]
