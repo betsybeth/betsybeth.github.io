@@ -1,11 +1,11 @@
 """ module that contain endpoints """
-from flask import Flask, request, session, jsonify
+from flask import Flask, request, session, jsonify, json
 from .main.user import User
 import re
 
 app = Flask(__name__)
 app.secret_key = "string"
-users= []
+users = []
 
 
 @app.route('/api/v1/auth/register', methods=['POST', 'GET'])
@@ -31,11 +31,12 @@ def register():
         return jsonify(error)
     new_user = User(password, name, email, category)
     users.append(new_user)
-    session['email'] = new_user.email
-    data = {"name": new_user.name,
-            "email": email,
-            "password": password,
-            "category": new_user.rsvp_category}
+    data = {
+        "name": new_user.name,
+        "email": new_user.email,
+        "password": new_user.password,
+        "category": new_user.rsvp_category
+    }
     return jsonify(data)
 
 
@@ -47,25 +48,54 @@ def login():
     password = json_dict["password"]
     message = None
     logged_email = None
-    print(".....>>>", logged_email)
     for user in users:
         if email and user.email != email:
-            message = {
-                "error": "email dont match"
-            }
+            message = {"error": "email dont match"}
             return jsonify(message)
         if password and user.password != password:
-            message = {
-                "error": "Password do not match"
-            }
+            message = {"error": "Password do not match"}
             return jsonify(message)
         else:
-            message = {
-                "message": "Successfully logged in"
-            }
+            message = {"message": "Successfully logged in"}
             logged_email = user.email
-            print("..======...>>>", logged_email)
             return jsonify(message)
+    session["email"] = logged_email
+    return jsonify(message)
 
-    session["logged_email"] = logged_email
+
+@app.route("/api/v1/create_event", methods=['POST'])
+"""Takes a request and return a json reponse"""
+def create_event():
+    json_dict = request.get_json()
+    name = json_dict["name"]
+    description = json_dict["description"]
+    category = json_dict["category"]
+    date = json_dict["date"]
+    author = json_dict["author"]
+    location = json_dict["location"]
+    message = None
+
+    for user in users:
+        if user.email == session["email"]:
+            if name and not isinstance(name, str):
+                message = {"message": "invalid name"}
+                return jsonify(message)
+            if description and not isinstance(description, str):
+                message = {"message": "invalid description"}
+                return jsonify(message)
+            if category and not isinstance(category, str):
+                message = {"message": "invalid category"}
+                return jsonify(message)
+            if date and not isinstance(date, str):
+                message = {"message": "invalid date"}
+                return jsonify(message)
+            if author and not isinstance(author, str):
+                message = {"message": "invalid author"}
+                return jsonify(message)
+            if location and not isinstance(location, str):
+                message = {"message": "invalid location"}
+                return jsonify(message)
+            user.create_event(name, description, category, date, author,
+                              location)
+            message = {"message": " event succesfully created "}
     return jsonify(message)
