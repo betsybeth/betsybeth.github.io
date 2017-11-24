@@ -7,6 +7,7 @@ To start using the Bright Event:
 git clone:
 `https://github.com/betsybeth/Bright_event.git`  
 into your computer
+* change your directory into `cd Bright_event`
 #### Usage
 with Bright Event you can:
 * create an account
@@ -23,7 +24,8 @@ with Bright Event you can:
 * First install the virtual environment globally `sudo pip instal virtualenv`
 * create the virtual enviroment `virtualenv --python=python3 myenv`
 * activate virtual environment `source myenv/bin/activate`
-
+####How to run flask
+* Run  `python run.py` 
 
 #### Testing:
 * Install nosetests `pip install nose`
