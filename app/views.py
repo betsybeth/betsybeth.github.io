@@ -99,3 +99,29 @@ def create_event():
                               location)
             message = {"message": " event succesfully created "}
     return jsonify(message)
+
+
+@app.route("/api/v1/events", methods=["GET"])
+def events():
+    for user in users:
+        if user.email == session["email"]:
+            events = user.events
+    return jsonify({"events": events})
+
+
+@app.route("/api/v1/update_event/<_id>", methods=["PUT"])
+def update_event(_id):
+    json_dict = request.get_json()
+    name = json_dict["name"]
+    description = json_dict["description"]
+    category = json_dict["category"]
+    date = json_dict["date"]
+    author = json_dict["author"]
+    location = json_dict["location"]
+    message = None
+    for user in users:
+        if user.email == session["email"]:
+            user.update_event(_id, name, description, category, date, author,
+                              location)
+            message = {"message": " event successfully edited"}
+        return jsonify(message)
