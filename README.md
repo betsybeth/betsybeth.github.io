@@ -24,15 +24,27 @@ with Bright Event you can:
 * First install the virtual environment globally `sudo pip instal virtualenv`
 * create the virtual enviroment `virtualenv --python=python3 myenv`
 * activate virtual environment `source myenv/bin/activate`
-####How to run flask
-* Run  `python run.py` 
+#### How to run flask
+* Run  `python run.py`
 
 #### Testing:
 * Install nosetests `pip install nose`
 * Run the tests `nosetests -v`
-#### Working in progress:
-* Flask API endpoints
+#### Flask API endpoints
 
+|  Endpoints      |     functionality    |
+|:-------------|------|-----------------:|
+| `POST /api/v1/auth/register` |  registers a user  |
+| `POST /api/v1/auth/login`   |  login a user       |
+| `POST /api/v1/events`       | create an event    |
+| `GET  /api/v1/events`       | retrieve events     |
+| `PUT   /api/v1/events/<eventId>`| updates an event |
+| `DELETE /api/v1/events/<eventId>`| deletes an event |
+| `POST /api/v1/event/<eventId>/rsvp`| create an rsvp |
+| `GET /api/v1/event/<eventId>/rsvp`| retrieves rsvps |
+| `PUT /api/v1/event/<eventId>/rsvp/<rsvpId>`|update rsvp              
+| `DELETE /api/v1/event/<eventId>/rsvp/<rsvpId>`| delete rsvp
+| `POST /api/v1/logout` |logout a user|
 
 ### Credits
 * [Beth][1]
