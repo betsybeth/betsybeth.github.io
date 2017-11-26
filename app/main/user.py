@@ -1,5 +1,6 @@
 from .person import Person
 from .event import Event
+from uuid import uuid4
 
 
 class User(Person):
@@ -7,6 +8,7 @@ class User(Person):
     def __init__(self, password, name, email, rsvp_category):
         super().__init__(name, email, rsvp_category)
         self.rsvp_category = "organizer"
+        self._id = uuid4().hex
         self.password = password
         self.events = dict()
 
@@ -14,16 +16,20 @@ class User(Person):
                      name,
                      description,
                      category,
-                     date, author, location):
+                     date,
+                     author,
+                     location,
+                     owner_id):
         """ add an event """
         new_event = Event(name,
                           description,
                           category,
                           date,
                           author,
-                          location)
-        self.events[new_event.id] = new_event
-        return self.events[new_event.id]
+                          location,
+                          owner_id=self._id)
+        self.events[new_event._id] = new_event
+        return self.events[new_event._id]
 
     def update_event(self, _id, name, description, category, date, author,
                      location):
