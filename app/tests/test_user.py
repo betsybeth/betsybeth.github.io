@@ -14,13 +14,17 @@ class TestUser(unittest.TestCase):
         self.beth = User("beth",
                          "bethwambuimuniu@gmail.com",
                          "organizer", 123)
+        self.beth._id = ("558899")
         self.talanta = Event("talanta",
                              "awesome",
                              "social",
                              "12/34/45",
                              "beth",
-                             "nairobi")
+                             "nairobi",
+                             "558899")
         self.beth.events = {"123456": self.talanta}
+
+
 
     def test_user_inherits_person(self):
         """ tests if user is a subclass of person """
@@ -34,7 +38,8 @@ class TestUser(unittest.TestCase):
                                "social",
                                "12/3/16",
                                "beth",
-                               "nairobi")
+                               "nairobi",
+                               "558899")
         new_result = len(self.beth.events)
         self.assertEqual(new_result, 2)
 
