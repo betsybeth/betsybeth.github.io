@@ -3,8 +3,6 @@ python:
   - 3.6
 install:
   - pip install -r requirements.txt
-
- script:
-  - nosetests --with-coverage --cover-package=tests && coverage report
-  success:
-    - coveralls
+script: nosetests --with-coverage --cover-package=tests && coverage report
+success:
+  - coveralls
