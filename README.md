@@ -1,4 +1,4 @@
-
+[![Build Status](https://travis-ci.org/betsybeth/betsybeth.github.io.svg?branch=master)](https://travis-ci.org/betsybeth/betsybeth.github.io)
 # Bright Event
 ### Introduction
 Bright Events application lets you create and manage events.
