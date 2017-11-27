@@ -33,19 +33,19 @@ with Bright Event you can:
 * Run the tests `nosetests -v`
 #### Flask API endpoints
 
-|  Endpoints      |     functionality    |
-|:-------------|------|-----------------:|
-| `POST /api/v1/auth/register` |  registers a user  |
-| `POST /api/v1/auth/login`   |  login a user       |
-| `POST /api/v1/events`       | create an event    |
-| `GET  /api/v1/events`       | retrieve events     |
-| `PUT   /api/v1/events/<eventId>`| updates an event |
-| `DELETE /api/v1/events/<eventId>`| deletes an event |
-| `POST /api/v1/event/<eventId>/rsvp`| create an rsvp |
-| `GET /api/v1/event/<eventId>/rsvp`| retrieves rsvps |
-| `PUT /api/v1/event/<eventId>/rsvp/<rsvpId>`|update rsvp              
-| `DELETE /api/v1/event/<eventId>/rsvp/<rsvpId>`| delete rsvp
-| `POST /api/v1/logout` |logout a user|
+| Endpoints                                       |       Functionality                  |
+| ------------------------------------------------|:------------------------------------:|
+| `POST /api/auth/register`                       |  registers a user                    |
+| `POST /api/auth/login`                          |  login a user                        |   
+| `POST /api/v1/events                            |  create an event                     |
+| `GET /api/v1/events`                            |  Retrieves an event                  |
+| `PUT /api/v1/events/<eventId>`                  |  updates an event                    |
+| `DELETE /api/v1/events/<eventId>`               |  deletes an event                    |
+| `POST /api/v1/event/<eventId>/rsvp`             |  create an rsvp                      |
+| `GET /api/v1/event/<eventId>/rsvp`              |  retrieves an rsvp                   |
+|` PUT /api/v1/event/<eventId>/rsvp/<rsvpId>`     |  updates an rsvp                     |
+|` DELETE /api/v1/event/<eventId>/rsvp/<rsvpId>`  |  delete an rsvp                      |
+|` POST /api/v1/logout`                           |  logout a user                       |
 
 ### Credits
 * [Beth][1]
