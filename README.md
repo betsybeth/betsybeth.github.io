@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/betsybeth/betsybeth.github.io.svg?branch=flask-develop)](https://travis-ci.org/betsybeth/betsybeth.github.io)
+[![Coverage Status](https://coveralls.io/repos/github/betsybeth/betsybeth.github.io/badge.svg?branch=master)](https://coveralls.io/github/betsybeth/betsybeth.github.io?branch=master)
 # Bright Event
 ### Introduction
 Bright Events application lets you create and manage events.
