@@ -14,8 +14,10 @@ def register():
     json_dict = request.get_json()
     name = json_dict["name"]
     email = json_dict["email"]
+    print("======> reg email", json_dict['email'])
     password = json_dict['password']
-    category = None
+    confirm = json_dict["confirm"]
+    category = json_dict["category"]
     if name and not isinstance(name, str):
         error = {"message": "Invalid name"}
         return jsonify(error)
@@ -25,21 +27,18 @@ def register():
     if password and len(password) < 7:
         error = {"message": "Password too short"}
         return jsonify(error)
+    if password != confirm:
+        error = {"message" : "password dont match"}
+        return jsonify(error)
     if category and not isinstance(category, str):
         error = {"message": "invalid category"}
         return jsonify(error)
-    new_user = User(password, name, email, category)
+    new_user = User(name, email, password, category)
     users.append(new_user)
-    data = {
-        "name": new_user.name,
-        "email": new_user.email,
-        "password": new_user.password,
-        "category": new_user.rsvp_category,
-        "id": new_user._id
-    }
-    return jsonify(data)
-
-
+    message = {"message": "successfully registered"}
+    response = jsonify(message)
+    response.status_code = 201
+    return response
 
 
 @app.route('/api/v1/auth/login', methods=['POST'])
@@ -47,6 +46,7 @@ def login():
     """Takes a request and returns a json response"""
     json_dict = request.get_json()
     email = json_dict["email"]
+    print("===>", json_dict["email"])
     password = json_dict["password"]
     for user in users:
         if email and user.email != email:
@@ -58,21 +58,10 @@ def login():
         else:
             message = {"message": "Successfully logged in"}
             session["user_id"] = user._id
-            return jsonify(message)
+            response = jsonify(message)
+            response.status_code = 200
+            return response
     return jsonify(message)
-@app.route('/api/v1/auth/reset-password', methods=['POST'])
-def reset_password():
-    """ takes a request and return a json response """
-    json_dict = request.get_json()
-    password = json_dict["password"]
-    if not users:
-        response = "register or login"
-    for user in users:
-        if user._id == session["user_id"]:
-            if password and len(password) < 7:
-                error = {"message": "Password too short"}
-                return jsonify(error)
-    return jsonify(error)
 
 
 @app.route("/api/v1/events", methods=['POST'])
@@ -112,6 +101,9 @@ def create_event():
             user.create_event(name, description, category, date, author,
                               location, user._id)
             message = {"message": " event succesfully created "}
+            response = jsonify(message)
+            response.status_code = 201
+            return response
     return jsonify(message)
 
 
@@ -162,6 +154,9 @@ def update_event(eventId):
             user.update_event(eventId, name, description, category, date,
                               author, location)
             message = {"message": " event successfully edited"}
+            response = jsonify(message)
+            response.status_code = 200
+            return response
     return jsonify(message)
 
 
@@ -174,6 +169,9 @@ def delete_event(eventId):
         if user._id == session["user_id"]:
             user.delete_event(eventId)
             message = {" message ": "event deleted"}
+            response = jsonify(message)
+            response.status_code = 200
+            return response
 
         return jsonify(message)
 
@@ -204,6 +202,9 @@ def create_rsvp(eventId):
                 if eventId == value._id:
                     value.add_rsvp(name, email, phone_no, category)
                     message = {"message": "rsvp created successfully"}
+                    response = jsonify(message)
+                    response.status_code = 201
+                    return response
     return jsonify(message)
 
 
@@ -217,7 +218,10 @@ def rsvps(eventId):
             for key, val in user.events.items():
                 if eventId == key:
                     rsvps = [rsvp.rsvps_data() for rsvp in val.rsvps.values()]
-                    response = {"rsvps": rsvps}
+                    message = {"rsvps": rsvps}
+                    response = jsonify(message)
+                    response.status_code = 200
+                    return response
             return jsonify(response)
 
 
@@ -250,7 +254,10 @@ def update_rsvp(eventId, rsvpId):
                         if keys == rsvpId:
                             val.update_rsvp(rsvpId, name, email, phone_no,
                                             category)
-                            return jsonify({"message": " rsvp successfully edited"})
+                            message = {"message": " rsvp successfully edited"}
+                            response = jsonify(message)
+                            response.status_code = 200
+                            return response
 
         return jsonify(message)
     return jsonify(message)
@@ -269,6 +276,9 @@ def delete_rsvp(eventId, rsvpId):
                         if keys == rsvpId:
                             val.delete_rsvp(rsvpId)
                             return jsonify({"message": "rsvp successfully deleted"})
+                            response = jsonify(message)
+                            response.status_code = 200
+                            return response
 
     return jsonify(message)
 
