@@ -11,13 +11,12 @@ users = []
 @app.route('/api/v1/auth/register', methods=['POST'])
 def register():
     """ Takes request and return a necessary response"""
-    json_dict = request.get_json()
-    name = json_dict["name"]
-    email = json_dict["email"]
-    print("======> reg email", json_dict['email'])
-    password = json_dict['password']
-    confirm = json_dict["confirm"]
-    category = json_dict["category"]
+    name = request.args.get("name")
+    print(">>>>", name)
+    email =request.args.get("email")
+    password = request.args.get('password')
+    confirm =request.args.get("confirm")
+    category =request.args.get("category")
     if name and not isinstance(name, str):
         error = {"message": "Invalid name"}
         return jsonify(error)
@@ -44,10 +43,8 @@ def register():
 @app.route('/api/v1/auth/login', methods=['POST'])
 def login():
     """Takes a request and returns a json response"""
-    json_dict = request.get_json()
-    email = json_dict["email"]
-    print("===>", json_dict["email"])
-    password = json_dict["password"]
+    email = request.args.get("email")
+    password = request.args.get("password")
     for user in users:
         if email and user.email != email:
             message = {"error": "email dont match"}
@@ -67,13 +64,12 @@ def login():
 @app.route("/api/v1/events", methods=['POST'])
 def create_event():
     """ Takes a request and return a json response """
-    json_dict = request.get_json()
-    name = json_dict["name"]
-    description = json_dict["description"]
-    category = json_dict["category"]
-    date = json_dict["date"]
-    author = json_dict["author"]
-    location = json_dict["location"]
+    name = request.args.get("name")
+    description = request.args.get("description")
+    category = request.args.get("category")
+    date = request.args.get("date")
+    author = request.args.get("author")
+    location = request.args.get("location")
     message = None
     if not users:
         message = "Login first"
@@ -122,13 +118,12 @@ def view_events():
 @app.route("/api/v1/events/<eventId>", methods=["PUT"])
 def update_event(eventId):
     """ edits events matching the eventId passed """
-    json_dict = request.get_json()
-    name = json_dict["name"]
-    description = json_dict["description"]
-    category = json_dict["category"]
-    date = json_dict["date"]
-    author = json_dict["author"]
-    location = json_dict["location"]
+    name =  request.args.get("name")
+    description = request.args.get("description")
+    category =  request.args.get("category")
+    date =  request.args.get("date")
+    author = request.args.get("author")
+    location =  request.args.get("location")
     if not users:
         message = "Login first"
     for user in users:
@@ -157,7 +152,7 @@ def update_event(eventId):
             response = jsonify(message)
             response.status_code = 200
             return response
-    return jsonify(message)
+    return jsonify(response)
 
 
 @app.route("/api/v1/events/<eventId>", methods=["DELETE"])
@@ -173,17 +168,16 @@ def delete_event(eventId):
             response.status_code = 200
             return response
 
-        return jsonify(message)
+        return jsonify(response)
 
 
 @app.route("/api/v1/event/<eventId>/rsvp", methods=["POST"])
 def create_rsvp(eventId):
     """ creates rsvp for particular event matching the eventId passed"""
-    json_dict = request.get_json()
-    name = json_dict["name"]
-    email = json_dict["email"]
-    phone_no = json_dict["phone_no"]
-    category = json_dict["category"]
+    name = request.args.get("name")
+    email = request.args.get("email")
+    phone_no =request.args.get("phone_no")
+    category = request.args.get("category")
     if not users:
         message = "Login first"
     for user in users:
@@ -205,7 +199,7 @@ def create_rsvp(eventId):
                     response = jsonify(message)
                     response.status_code = 201
                     return response
-    return jsonify(message)
+        return jsonify(response)
 
 
 @app.route("/api/v1/event/<eventId>/rsvp", methods=["GET"])
