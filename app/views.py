@@ -199,7 +199,7 @@ def create_rsvp(eventId):
                     response = jsonify(message)
                     response.status_code = 201
                     return response
-        return jsonify(response)
+    return jsonify(response)
 
 
 @app.route("/api/v1/event/<eventId>/rsvp", methods=["GET"])
@@ -222,11 +222,10 @@ def rsvps(eventId):
 @app.route("/api/v1/event/<eventId>/rsvp/<rsvpId>", methods=["PUT"])
 def update_rsvp(eventId, rsvpId):
     """ edits the rsvps for each event according to the rsvpId """
-    json_dict = request.get_json()
-    name = json_dict["name"]
-    email = json_dict["email"]
-    phone_no = json_dict["phone_no"]
-    category = json_dict["category"]
+    name = request.args.get("name")
+    email = request.args.get("email")
+    phone_no = request.args.get("phone_no")
+    category =request.args.get("category")
     message = None
     if not users:
         message = "login first"
