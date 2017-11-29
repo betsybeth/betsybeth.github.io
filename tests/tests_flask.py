@@ -66,9 +66,12 @@ class FlaskEventsTest(unittest.TestCase):
         self.assertEqual(resp.status_code, 200)
         self.assertIn("event deleted", str(resp.data))
 
-    # def test_create_rsvp(self):
+    def test_create_rsvp(self):
+        self.test_login()
+        self.test_create_event()
+        resp = self.app.post('/api/v1/event/123456/rsvp', data=self.rsvp)
+        self.assertEqual(resp.status_code, 201)
+        self.assertIn("rsvp created successfully", str(resp.data))
+    # def update_rsvp(self):
     #     self.test_login()
-    #     self.test_create_event()
-    #     resp = self.app.post('/api/v1/event/123456/rsvp', data=self.rsvp)
-    #     self.assertEqual(resp.status_code, 201)
-    #     self.assertIn("rsvp created successfully", str(resp.data))
+    #     se
