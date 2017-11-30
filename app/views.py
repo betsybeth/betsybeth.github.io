@@ -35,7 +35,7 @@ def register():
         return jsonify(error)
     else:
         new_user = User(name, email, password, category)
-        data = {"name":new_user.name}
+        data = {"name": new_user.name}
         users.append(new_user)
         message = {"message": "successfully registered"}
         response = jsonify(message)
@@ -70,13 +70,13 @@ def login():
 @app.route("/api/v1/events", methods=['POST'])
 def create_event():
     """ Takes a request and return a json response """
-    json_dict= request.get_json()
+    json_dict = request.get_json()
     name = json_dict["name"]
     description = json_dict["description"]
     category = json_dict["category"]
     date = json_dict["date"]
     author = json_dict["author"]
-    location =json_dict["location"]
+    location = json_dict["location"]
     message = None
     if not users:
         message = "Login first"
@@ -125,12 +125,12 @@ def view_events():
 @app.route("/api/v1/events/<eventId>", methods=["PUT"])
 def update_event(eventId):
     """ edits events matching the eventId passed """
-    json_dict= request.get_json()
-    name =json_dict["name"]
+    json_dict = request.get_json()
+    name = json_dict["name"]
     description = json_dict["description"]
-    category =json_dict["category"]
+    category = json_dict["category"]
     date = json_dict["date"]
-    author =json_dict["author"]
+    author = json_dict["author"]
     location = json_dict["location"]
     if not users:
         message = "Login first"
@@ -234,7 +234,7 @@ def update_rsvp(eventId, rsvpId):
     json_dict = request.get_json()
     name = json_dict["name"]
     email = json_dict["email"]
-    phone_no =json_dict["phone_no"]
+    phone_no = json_dict["phone_no"]
     category = json_dict["category"]
     message = None
     if not users:
@@ -288,12 +288,10 @@ def delete_rsvp(eventId, rsvpId):
     return jsonify(message)
 
 
-
 @app.route("/api/v1/logout", methods=["POST"])
 def logout():
     """ removes the user_id session """
     for user in users:
-        if user._id == session["user_id"]:
-            session.clear()
-            response = "successfully logout"
+        users.remove(user)
+        response ="successfully logout"
     return jsonify(response)
