@@ -3,6 +3,9 @@
 # Bright Event
 ### Introduction
 Bright Events application lets you create and manage events.
+##### [click here to access bright events github pages][2]
+
+[2]:https://betsybeth.github.io/Designs/UI/Templates/home.html
 #### Getting Started
 To start using the Bright Event:
 git clone:
