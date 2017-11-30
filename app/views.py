@@ -11,42 +11,48 @@ users = []
 @app.route('/api/v1/auth/register', methods=['POST'])
 def register():
     """ Takes request and return a necessary response"""
-    name = request.args.get("name")
-    print(">>>>", name)
-    email =request.args.get("email")
-    password = request.args.get('password')
-    confirm =request.args.get("confirm")
-    category =request.args.get("category")
+    json_dict = request.get_json()
+    name = json_dict["name"]
+    email = json_dict["email"]
+    password = json_dict['password']
+    confirm = json_dict["confirm"]
+    category = json_dict["category"]
     if name and not isinstance(name, str):
+        print(">>>>", name)
         error = {"message": "Invalid name"}
         return jsonify(error)
     if email and not re.match(r"([\w\.-]+)@([\w\.-]+)(\.[\w\.]+$)", email):
         error = {"message": "Invalid Email"}
         return jsonify(error)
-    if password and len(password) < 7:
+    if len(password) < 7:
         error = {"message": "Password too short"}
         return jsonify(error)
     if password != confirm:
-        error = {"message" : "password dont match"}
+        error = {"message": "password dont match"}
         return jsonify(error)
     if category and not isinstance(category, str):
         error = {"message": "invalid category"}
         return jsonify(error)
-    new_user = User(name, email, password, category)
-    users.append(new_user)
-    message = {"message": "successfully registered"}
-    response = jsonify(message)
-    response.status_code = 201
-    return response
+    else:
+        new_user = User(name, email, password, category)
+        data = {"name":new_user.name}
+        users.append(new_user)
+        message = {"message": "successfully registered"}
+        response = jsonify(message)
+        response.status_code = 201
+        return response
+    return jsonify(response)
 
 
 @app.route('/api/v1/auth/login', methods=['POST'])
 def login():
     """Takes a request and returns a json response"""
-    email = request.args.get("email")
-    password = request.args.get("password")
+    json_dict = request.get_json()
+    email = json_dict["email"]
+    password = json_dict["password"]
     for user in users:
         if email and user.email != email:
+            print(">>>>>", user.email, email)
             message = {"error": "email dont match"}
             return jsonify(message)
         if password and user.password != password:
@@ -58,18 +64,19 @@ def login():
             response = jsonify(message)
             response.status_code = 200
             return response
-    return jsonify(message)
+    return jsonify(response)
 
 
 @app.route("/api/v1/events", methods=['POST'])
 def create_event():
     """ Takes a request and return a json response """
-    name = request.args.get("name")
-    description = request.args.get("description")
-    category = request.args.get("category")
-    date = request.args.get("date")
-    author = request.args.get("author")
-    location = request.args.get("location")
+    json_dict= request.get_json()
+    name = json_dict["name"]
+    description = json_dict["description"]
+    category = json_dict["category"]
+    date = json_dict["date"]
+    author = json_dict["author"]
+    location =json_dict["location"]
     message = None
     if not users:
         message = "Login first"
@@ -118,12 +125,13 @@ def view_events():
 @app.route("/api/v1/events/<eventId>", methods=["PUT"])
 def update_event(eventId):
     """ edits events matching the eventId passed """
-    name =  request.args.get("name")
-    description = request.args.get("description")
-    category =  request.args.get("category")
-    date =  request.args.get("date")
-    author = request.args.get("author")
-    location =  request.args.get("location")
+    json_dict= request.get_json()
+    name =json_dict["name"]
+    description = json_dict["description"]
+    category =json_dict["category"]
+    date = json_dict["date"]
+    author =json_dict["author"]
+    location = json_dict["location"]
     if not users:
         message = "Login first"
     for user in users:
@@ -174,10 +182,11 @@ def delete_event(eventId):
 @app.route("/api/v1/event/<eventId>/rsvp", methods=["POST"])
 def create_rsvp(eventId):
     """ creates rsvp for particular event matching the eventId passed"""
-    name = request.args.get("name")
-    email = request.args.get("email")
-    phone_no =request.args.get("phone_no")
-    category = request.args.get("category")
+    json_dict = request.get_json()
+    name = json_dict["name"]
+    email = json_dict["email"]
+    phone_no = json_dict["phone_no"]
+    category = json_dict["category"]
     if not users:
         message = "Login first"
     for user in users:
@@ -216,16 +225,17 @@ def rsvps(eventId):
                     response = jsonify(message)
                     response.status_code = 200
                     return response
-            return jsonify(response)
+    return jsonify(response)
 
 
 @app.route("/api/v1/event/<eventId>/rsvp/<rsvpId>", methods=["PUT"])
 def update_rsvp(eventId, rsvpId):
     """ edits the rsvps for each event according to the rsvpId """
-    name = request.args.get("name")
-    email = request.args.get("email")
-    phone_no = request.args.get("phone_no")
-    category =request.args.get("category")
+    json_dict = request.get_json()
+    name = json_dict["name"]
+    email = json_dict["email"]
+    phone_no =json_dict["phone_no"]
+    category = json_dict["category"]
     message = None
     if not users:
         message = "login first"
@@ -252,8 +262,7 @@ def update_rsvp(eventId, rsvpId):
                             response.status_code = 200
                             return response
 
-        return jsonify(message)
-    return jsonify(message)
+    return jsonify(response)
 
 
 @app.route("/api/v1/event/<eventId>/rsvp/<rsvpId>", methods=["DELETE"])
@@ -268,7 +277,10 @@ def delete_rsvp(eventId, rsvpId):
                     for keys, vals in val.rsvps.items():
                         if keys == rsvpId:
                             val.delete_rsvp(rsvpId)
-                            return jsonify({"message": "rsvp successfully deleted"})
+                            return jsonify({
+                                "message":
+                                "rsvp successfully deleted"
+                            })
                             response = jsonify(message)
                             response.status_code = 200
                             return response
@@ -276,9 +288,12 @@ def delete_rsvp(eventId, rsvpId):
     return jsonify(message)
 
 
+
 @app.route("/api/v1/logout", methods=["POST"])
 def logout():
     """ removes the user_id session """
-    session.clear()
-    response = "successfully logout"
+    for user in users:
+        if user._id == session["user_id"]:
+            session.clear()
+            response = "successfully logout"
     return jsonify(response)
