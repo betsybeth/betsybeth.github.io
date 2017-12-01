@@ -1,11 +1,12 @@
-from .person import Person
-from .event import Event
 from uuid import uuid4
+
+from .event import Event
+from .person import Person
 
 
 class User(Person):
 
-    def __init__(self, password, name, email, rsvp_category):
+    def __init__(self,name, email, password, rsvp_category):
         super().__init__(name, email, rsvp_category)
         self.rsvp_category = "organizer"
         self._id = uuid4().hex
