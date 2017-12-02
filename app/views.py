@@ -25,10 +25,13 @@ def handle_server_error(error):
     response.status_code = 500
     return response
 
+
 @app.route("/", methods=['POST'])
 def home():
     """Take request and return a necessary response."""
-    return redirect("https://betsybeth.github.io/Designs/UI/Templates/home.html")
+    return redirect(
+        "https://betsybeth.github.io/Designs/UI/Templates/home.html",
+        302)
 
 
 @app.route('/api/v1/auth/register', methods=['POST'])
