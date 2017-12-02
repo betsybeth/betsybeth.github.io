@@ -31,7 +31,7 @@ def home():
     """Take request and return a necessary response."""
     return redirect(
         "https://betsybeth.github.io/Designs/UI/Templates/home.html",
-        302)
+        code=302)
 
 
 @app.route('/api/v1/auth/register', methods=['POST'])
