@@ -1,11 +1,11 @@
-""" modules and libraries used for Test Person class"""
+"""Modules and libraries used for Test Person class."""
 import unittest
 from app.main.person import Person
 
 
 class TestPerson(unittest.TestCase):
-    """ Person Test class """
+    """Person Test class"""
 
     def setUp(self):
-        """ setup fixture for testing """
+        """Setup fixture for testing."""
         self.beth = Person("beth", "bethwambuimuniu@gmail.com" 'guest')
