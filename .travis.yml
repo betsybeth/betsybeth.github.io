@@ -6,4 +6,6 @@ install:
 script: nosetests --with-coverage --cover-package=app && coverage report
 after_success:
   - coverage report --omit 'app/views.py'
+  - coverage combine
+  - cat .coverage
   - coveralls
