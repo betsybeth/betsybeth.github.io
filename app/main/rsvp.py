@@ -1,22 +1,21 @@
-""" modules and standard libraries """
-from .person import Person
+"""Modules and standard libraries."""
 from uuid import uuid4
-
+from .person import Person
 
 
 class Rsvp(Person):
-    """ main class for the RSVP """
+    """Main class for the RSVP."""
     def __init__(self, name, email, phone_no, rsvp_category):
         super().__init__(name, email, rsvp_category)
         self.phone_no = phone_no
         self._id = uuid4().hex
 
     def rsvps_data(self):
-        """ returns the rsvp"""
+        """Returns rsvps."""
         return {
-            "_id" :self._id,
-             "name":self.name,
-             "email": self.email,
-             "phone_no":self.phone_no,
-             "rsvp_category":self.rsvp_category
+            "_id": self._id,
+            "name": self.name,
+            "email": self.email,
+            "phone_no": self.phone_no,
+            "rsvp_category": self.rsvp_category
         }
