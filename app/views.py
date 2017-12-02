@@ -105,31 +105,32 @@ def create_event():
     message = None
     if not users:
         response = {"message": "Login first"}
-    for user in users:
-        if user._id == session["user_id"]:
-            if name.strip() == "" or not name.isalpha():
-                message = {"message": "invalid name"}
-                return jsonify(message)
-            if description.strip() == "" or not description.isalpha():
-                message = {"message": "invalid description"}
-                return jsonify(message)
-            if category.strip() == "" or not category.isalpha():
-                message = {"message": "invalid category"}
-                return jsonify(message)
-            if not isinstance(date, str):
-                message = {"message": "invalid date"}
-            if author.strip() == "" or not author.isalpha():
-                message = {"message": "invalid author"}
-                return jsonify(message)
-            if location.strip() == "" or not location.isalpha():
-                message = {"message": "invalid location"}
-                return jsonify(message)
-            user.create_event(name, description, category, date, author,
-                              location, user._id)
-            response = jsonify({"message": " event succesfully created "})
-            response.status_code = 201
-            return response
-        return jsonify(response)
+    else:
+        for user in users:
+            if user._id == session["user_id"]:
+                if name.strip() == "" or not name.isalpha():
+                    message = {"message": "invalid name"}
+                    return jsonify(message)
+                if description.strip() == "" or not description.isalpha():
+                    message = {"message": "invalid description"}
+                    return jsonify(message)
+                if category.strip() == "" or not category.isalpha():
+                    message = {"message": "invalid category"}
+                    return jsonify(message)
+                if not isinstance(date, str):
+                    message = {"message": "invalid date"}
+                if author.strip() == "" or not author.isalpha():
+                    message = {"message": "invalid author"}
+                    return jsonify(message)
+                if location.strip() == "" or not location.isalpha():
+                    message = {"message": "invalid location"}
+                    return jsonify(message)
+                user.create_event(name, description, category, date, author,
+                                  location, user._id)
+                response = jsonify({"message": " event succesfully created "})
+                response.status_code = 201
+                return response
+    return jsonify(response)
 
 
 @app.route("/api/v1/events", methods=["GET"])
