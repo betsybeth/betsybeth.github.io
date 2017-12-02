@@ -26,7 +26,7 @@ def handle_server_error(error):
     return response
 
 
-@app.route("/", methods=['POST'])
+@app.route("/")
 def home():
     """Take request and return a necessary response."""
     return redirect(
