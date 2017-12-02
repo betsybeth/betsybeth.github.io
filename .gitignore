@@ -1,3 +1,4 @@
 
 *.pyc
 myenv/
+.ropeproject/config.py
