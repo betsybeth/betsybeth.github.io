@@ -118,8 +118,6 @@ def create_event():
                 return jsonify(message)
             if not isinstance(date, str):
                 message = {"message": "invalid date"}
-            if not isinstance(date, str):
-                return jsonify(message)
             if author.strip() == "" or not author.isalpha():
                 message = {"message": "invalid author"}
                 return jsonify(message)
@@ -131,7 +129,7 @@ def create_event():
             response = jsonify({"message": " event succesfully created "})
             response.status_code = 201
             return response
-    return jsonify(response)
+        return jsonify(response)
 
 
 @app.route("/api/v1/events", methods=["GET"])
