@@ -1,9 +1,10 @@
+"""Modules used by event class."""
 from .rsvp import Rsvp
 from uuid import uuid4
 
 
 class Event:
-    """ main class for Event """
+    """Main class for Event."""
 
     def __init__(self, name, description, category, date, author,
                  location, owner_id):
@@ -18,7 +19,7 @@ class Event:
         self.rsvps = dict()
 
     def events_data(self):
-        """returns events """
+        """Returns events."""
         return {
             "name": self.name,
             "description": self.description,
@@ -26,19 +27,18 @@ class Event:
             "date": self.date,
             "_id": self._id,
             "author": self.author,
-            "location":self.location,
-            "owner_id":self.owner_id
+            "location": self.location,
+            "owner_id": self.owner_id
         }
 
-
     def add_rsvp(self, name, email, phone_no, rsvp_category):
-        """ add an rsvp to the event """
+        """Add an rsvp to the event."""
         new_rsvp = Rsvp(phone_no, name, email, rsvp_category)
         self.rsvps[new_rsvp._id] = new_rsvp
         return self.rsvps[new_rsvp._id]
 
     def update_rsvp(self, _id, name, email, phone_no, rsvp_category):
-        """ edit an rsvp to the event """
+        """Edit an rsvp to the event."""
         for key in self.rsvps.copy().keys():
             if _id == key:
                 self.rsvps[key].name = name
@@ -47,11 +47,11 @@ class Event:
                 self.rsvps[key].rsvp_category = rsvp_category
 
     def delete_rsvp(self, _id):
-        """ deletes an rsvp to the event """
+        """Deletes an rsvp to the event."""
         for key in self.rsvps.copy().keys():
             if _id == key:
                 del self.rsvps[_id]
 
     def __repr__(self):
-        """ Return formatted event object"""
+        """Return formatted event object."""
         return '<Event {}>'.format(self.name)
