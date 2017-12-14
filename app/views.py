@@ -20,18 +20,26 @@ def not_found(error):
 @app.errorhandler(500)
 def handle_server_error(error):
     """Handle 500 error."""
-    response = jsonify(
-        {"message": "oops! something went wrong with the application"})
+    response = jsonify({
+        "message":
+        "oops! something went wrong with the application"
+    })
     response.status_code = 500
     return response
+@app.errorhandler(405)
+def not_allowed(error):
+    """Handle 405 error."""
+    response = jsonify({"message": "Sorry the method is not allowed"})
+    response.status_code = 405
+    return response
+
 
 
 @app.route("/")
 def home():
     """Take request and return a necessary response."""
     return redirect(
-        "https://betsybeth.github.io/Designs/UI/Templates/home.html",
-        code=302)
+        "https://betsybeth.github.io/Designs/UI/Templates/home.html", code=302)
 
 
 @app.route('/api/v1/auth/register', methods=['POST'])
@@ -48,6 +56,9 @@ def register():
         return jsonify(error)
     if not re.match(r"([\w\.-]+)@([\w\.-]+)(\.[\w\.]+$)", email):
         error = {"message": "Invalid Email"}
+        return jsonify(error)
+    if password.strip() == "" or not password.isalpha():
+        error = {"message": "Invalid password"}
         return jsonify(error)
     if len(password) < 7:
         error = {"message": "Password too short"}
@@ -105,31 +116,32 @@ def create_event():
     message = None
     if not users:
         response = {"message": "Login first"}
-    else:
-        for user in users:
-            if user._id == session["user_id"]:
-                if name.strip() == "" or not name.isalpha():
-                    message = {"message": "invalid name"}
-                    return jsonify(message)
-                if description.strip() == "" or not description.isalpha():
-                    message = {"message": "invalid description"}
-                    return jsonify(message)
-                if category.strip() == "" or not category.isalpha():
-                    message = {"message": "invalid category"}
-                    return jsonify(message)
-                if not isinstance(date, str):
-                    message = {"message": "invalid date"}
-                if author.strip() == "" or not author.isalpha():
-                    message = {"message": "invalid author"}
-                    return jsonify(message)
-                if location.strip() == "" or not location.isalpha():
-                    message = {"message": "invalid location"}
-                    return jsonify(message)
-                user.create_event(name, description, category, date, author,
+    for user in users:
+        if user._id == session["user_id"]:
+            if name.strip() == "" or not name.isalpha():
+                message = {"message": "invalid name"}
+                return jsonify(message)
+            if description.strip() == "" or not description.isalpha():
+                message = {"message": "invalid description"}
+                return jsonify(message)
+            if category.strip() == "" or not category.isalpha():
+                message = {"message": "invalid category"}
+                return jsonify(message)
+            if not isinstance(date, str):
+                message = {"message": "invalid date"}
+            if author.strip() == "" or not author.isalpha():
+                message = {"message": "invalid author"}
+                return jsonify(message)
+            if location.strip() == "" or not location.isalpha():
+                message = {"message": "invalid location"}
+                return jsonify(message)
+            for event in user.events:
+                return jsonify({"message": "event already exist"})
+            user.create_event(name, description, category, date, author,
                                   location, user._id)
-                response = jsonify({"message": " event succesfully created "})
-                response.status_code = 201
-                return response
+            response = jsonify({"message": " event succesfully created "})
+            response.status_code = 201
+            return response
     return jsonify(response)
 
 
@@ -196,13 +208,14 @@ def delete_event(eventId):
         response = {"message": "Login first"}
     for user in users:
         if user._id == session["user_id"]:
-            user.delete_event(eventId)
-            message = {" message ": "event deleted"}
-            response = jsonify(message)
-            response.status_code = 202
-            return response
-
-        return jsonify(response)
+            for event in user.events:
+                user.delete_event(eventId)
+                message = {" message ": "event deleted"}
+                response = jsonify(message)
+                response.status_code = 204
+                return response
+            return jsonify({"message": "not found, event already deleted"})
+    return jsonify(response)
 
 
 @app.route("/api/v1/event/<eventId>/rsvp", methods=["POST"])
@@ -220,20 +233,25 @@ def create_rsvp(eventId):
             if name.strip() == "" or not name.isalpha():
                 error = {"message": "Invalid name"}
                 return jsonify(error)
-            if email and \
-                    not re.match(r"([\w\.-]+)@([\w\.-]+)(\.[\w\.]+$)", email):
+            if not re.match(r"([\w\.-]+)@([\w\.-]+)(\.[\w\.]+$)", email):
                 error = {"message": "Invalid Email"}
                 return jsonify(error)
-            if phone_no and len(phone_no) < 10:
+            if phone_no.strip() == "":
+                error = {"message": "invalid phone number"}
+                return jsonify(error)
+            if len(phone_no) < 10:
                 error = {"message": "phone_no too short"}
                 return jsonify(error)
             for value in user.events.values():
+                for val in value.rsvps.items():
+                    return jsonify({"message": "rsvp already exist"})
                 if eventId == value._id:
                     value.add_rsvp(name, email, phone_no, category)
                     message = {"message": "rsvp created successfully"}
                     response = jsonify(message)
                     response.status_code = 201
                     return response
+
     return jsonify(response)
 
 
@@ -270,11 +288,12 @@ def update_rsvp(eventId, rsvpId):
             if name.strip() == "" or not name.isalpha():
                 error = {"message": "Invalid name"}
                 return jsonify(error)
-            if email and \
-                    not re.match(r"([\w\.-]+)@([\w\.-]+)(\.[\w\.]+$)", email):
+            if not re.match(r"([\w\.-]+)@([\w\.-]+)(\.[\w\.]+$)", email):
                 error = {"message": "Invalid Email"}
                 return jsonify(error)
-            if phone_no and len(phone_no) < 10:
+            if phone_no.strip() == "":
+                error = {"message": "invalid phone_no"}
+            if len(phone_no) < 10:
                 error = {"message": "phone_no too short"}
                 return jsonify(error)
             for key, val in user.events.items():
@@ -308,8 +327,9 @@ def delete_rsvp(eventId, rsvpId):
                                 "rsvp successfully deleted"
                             })
                             response = jsonify(message)
-                            response.status_code = 202
+                            response.status_code = 204
                             return response
+            return jsonify({"message": "not found, rsvp already deleted"})
 
     return jsonify(response)
 
